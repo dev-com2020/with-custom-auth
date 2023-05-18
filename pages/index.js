@@ -1,5 +1,6 @@
 import graphql from "../lib/graphql";
 import getAllProducts from "../lib/graphql/queries/getAllProducts";
+import { Grid } from "@chakra-ui/react";
 
 export const getStaticProps = async () => {
   const { products } = await graphql.request(getAllProducts);
@@ -15,7 +16,9 @@ export default function Home() {
   return (
    <Grid gridTemplateColumns='repeat(4, 1fr)' gap={5}>
       {props.products.map((product) => (
-        <ProductCard key={product.id} {...product} />
+        <li key={product.id} {...product}>
+          {product.name}
+        </li>
       ))}
     </Grid>
   );
