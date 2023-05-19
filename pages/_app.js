@@ -2,6 +2,7 @@ import { ChakraProvider, Box, Flex } from "@chakra-ui/react";
 import CartContext from "../lib/context/Cart";
 import { useState } from "react";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 function MyApp({ Component, pageProps }) {
   const [items, setItems] = useState({});
@@ -14,9 +15,9 @@ function MyApp({ Component, pageProps }) {
     <Component {...pageProps} />
     </Box>
     </Flex>
+    <Footer />
     </CartContext.Provider>
   </ChakraProvider>
 );
 }
-
 export default MyApp;
