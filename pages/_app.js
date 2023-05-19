@@ -5,7 +5,7 @@ function MyApp({ Component, pageProps }) {
   <ChakraProvider>
     <Flex w='full' minH='100vh' bgColor='gray.100'>
     <Box maxW='70vw' m='auto'>
-    <Component {...pageProps} />;
+    <Component {...pageProps} />
     </Box>
     </Flex>
   </ChakraProvider>
