@@ -1,18 +1,20 @@
 import { useContext, useEffect,useState } from "react";
 import { Box, Flex, Heading, Text, Button, Image, Divider } from "@chakra-ui/react";
-import { CartContext } from "../context/CartContext";
+import CartContext from "../lib/context/Cart";
 import getProductsById from "../lib/graphql/queries/getProductsById";
 
 export default function Cart() {
     const { items } = useContext(CartContext);
     const [products, setProducts] = useState([]);
-    const hasProducts = Object.keys(items).length
+    const hasProducts = Object.keys(items).length;
+
     useEffect(() => {
         if (!hasProducts) return;
+
     graphql.request(getProductsById, { 
-        ids: Object.keys(items) 
+        ids: Object.keys(items),
     })
-        .then((data) => { setProducts(data.products)
+        .then((data) => { setProducts(data.products);
     })
     .catch((err) => console.log(err));
 },[JSON.stringify(products)]);
