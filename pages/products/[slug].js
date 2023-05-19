@@ -5,6 +5,19 @@ import { Grid, Box, Image, Text, Button, Flex, Select, Divider } from "@chakra-u
 import { useState, useContext } from "react";
 import CartContext from "../../lib/context/Cart";
 
+export async function getStaticPaths() {
+    const { products } = await graphql.request(getAllProducts);
+    const paths = products.map((product) => ({
+        params: {
+            slug: product.slug,
+        },
+        }));
+        return {
+        paths,
+        fallback: false,
+    };
+}
+
 export async function getStaticProps({params}) {
     const { products } = await graphql.request(GetProductBySlug,
         { slug: params.slug, });
@@ -12,17 +25,6 @@ return {
     props: {
     product: products[0],
     },
-    };
-}
-export async function getStaticPaths() {
-    const { products } = await graphql.request(getAllProducts);
-    return {
-        paths: products.map((product) => ({
-        params: {
-            slug: product.slug,
-        },
-        })),
-        fallback: false,
     };
 }
 
@@ -43,18 +45,16 @@ function SelectQuantity(props){
 
 export default function ProductPage({product}) {
     const [quantity, setQuantity] = useState(0);
-    const [items, setItems] = useContext(CartContext);
+    const {items, setItems} = useContext(CartContext);
 
-    // const alreadyInCart = product.id in items;
+    const alreadyInCart = product.id in items;
 
-    function addToCart(){
-        setItems({
-            ...items,
-            [product.id]: quantity,
-        });
-    }
-
-
+    function addToCart() {
+            setItems({
+                ...items,
+                [product.id]: quantity,
+            });
+        }
 return (
     <Flex rounded='xl' boxShadow='2xl'w='full'bgColor='white'p='16'>
         <Image src={product.images[0].url}/>
@@ -66,11 +66,11 @@ return (
             <Grid gridTemplateColumns='repeat(2, 1fr)' gap={5}>
                 <SelectQuantity onChange={(quantity) => setQuantity(parseInt(quantity))} />
                 <Button colorScheme= 'blue' onClick={addToCart}>
-                    {/* {alreadyInCart ? 'Aktualizuj': 'Dodaj do koszyka'} */}
-                    Dodaj do koszyka
+                    {alreadyInCart ? 'Aktualizuj': 'Dodaj do koszyka'}
                 </Button>
             </Grid>
         </Box>
     </Flex>
 );
 }
+

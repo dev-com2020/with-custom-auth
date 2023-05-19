@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 
 function MyApp({ Component, pageProps }) {
   const [items, setItems] = useState({});
+  
   return (
   <ChakraProvider>
     <CartContext.Provider value={{ items,setItems }}>

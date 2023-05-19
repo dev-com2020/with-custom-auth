@@ -19,8 +19,6 @@ export default function Cart() {
     .catch((err) => console.log(err));
 },[JSON.stringify(products)]);
 
-
-
     return (
         <Box>
             <Text>Cart</Text>
